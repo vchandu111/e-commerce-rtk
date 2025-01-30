@@ -1,9 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Home, ShoppingCart, Info, Box } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 import styles from "../styles/Navbar.module.css";
 
 const Navbar: React.FC = () => {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <nav className={styles.nav}>
       <Link to="/" className={styles.logo}>
@@ -31,7 +36,7 @@ const Navbar: React.FC = () => {
         <li className={`${styles.li} ${styles.cartIcon}`}>
           <Link className={styles.link} to="/cart">
             <ShoppingCart size={20} className={styles.icon} />
-            <span className={styles.cartCount}>3</span>
+            <span className={styles.cartCount}>{itemCount}</span>
           </Link>
         </li>
       </ul>

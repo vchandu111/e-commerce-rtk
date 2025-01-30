@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../features/productsSlice";
 import { RootState, AppDispatch } from "../app/store";
 import styles from "../styles/Products.module.css";
-import { ShoppingCart } from "lucide-react";
 
 const Products: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -36,7 +35,6 @@ const Products: React.FC = () => {
                 >
                   View Details
                 </button>
-                <ShoppingCart className={styles.icon} />
               </div>
             </div>
           ))}

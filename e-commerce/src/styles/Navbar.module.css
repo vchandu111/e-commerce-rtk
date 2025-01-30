@@ -56,3 +56,33 @@
   margin-right: 0.5rem;
   vertical-align: middle;
 } 
+
+/* e-commerce/src/styles/Navbar.module.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #3498db;
+  color: white;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  position: relative;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.cartCount {
+  background-color: #e74c3c;
+  border-radius: 50%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}

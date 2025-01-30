@@ -12,23 +12,65 @@ const Cart: React.FC = () => {
     dispatch(removeFromCart(id));
   };
 
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
   return (
-    <div className={styles.cart}>
-      <h1>Shopping Cart</h1>
+    <div className={styles.cartContainer}>
+      <h1 className={styles.cartTitle}>Shopping Cart</h1>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <div className={styles.emptyCart}>
+          <p>Your cart is empty.</p>
+          <a href="/products" className={styles.continueShoppingLink}>
+            Continue Shopping
+          </a>
+        </div>
       ) : (
-        <ul>
-          {cartItems.map((item) => (
-            <li key={item.id}>
-              <span>{item.title}</span>
-              <span>
-                ${item.price} x {item.quantity}
-              </span>
-              <button onClick={() => handleRemove(item.id)}>Remove</button>
-            </li>
-          ))}
-        </ul>
+        <>
+          <div className={styles.cartItems}>
+            {cartItems.map((item) => (
+              <div key={item.id} className={styles.cartItem}>
+                <div className={styles.itemDetails}>
+                  <h3>{item.title}</h3>
+                  <p className={styles.itemPrice}>${item.price}</p>
+                  <div className={styles.quantityControls}>
+                    <span>Quantity: {item.quantity}</span>
+                  </div>
+                </div>
+                <div className={styles.itemActions}>
+                  <p className={styles.itemSubtotal}>
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </p>
+                  <button
+                    className={styles.removeButton}
+                    onClick={() => handleRemove(item.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className={styles.cartSummary}>
+            <div className={styles.summaryRow}>
+              <span>Subtotal:</span>
+              <span>${totalPrice.toFixed(2)}</span>
+            </div>
+            <div className={styles.summaryRow}>
+              <span>Shipping:</span>
+              <span>Free</span>
+            </div>
+            <div className={`${styles.summaryRow} ${styles.total}`}>
+              <span>Total:</span>
+              <span>${totalPrice.toFixed(2)}</span>
+            </div>
+            <button className={styles.checkoutButton}>
+              Proceed to Checkout
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
