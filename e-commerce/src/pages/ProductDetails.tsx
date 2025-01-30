@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "../features/productsSlice";
+import { addToCart } from "../features/cartSlice";
 import { RootState, AppDispatch } from "../app/store";
 import styles from "../styles/ProductDetails.module.css";
 
 const ProductDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>();
+    
   const dispatch = useDispatch<AppDispatch>();
   const product = useSelector(
     (state: RootState) => state.products.selectedProduct
@@ -19,6 +21,21 @@ const ProductDetails: React.FC = () => {
       dispatch(fetchProductDetails(id));
     }
   }, [id, dispatch]);
+
+    const handleAddToCart = () => {
+      console.log('cart')
+    if (product) {
+      dispatch(
+        addToCart({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          quantity: 1,
+        })
+      );
+    }
+        alert("added to cart")
+  };
 
   if (status === "loading") return <p>Loading...</p>;
   if (status === "failed") return <p>Error: {error}</p>;
@@ -37,7 +54,9 @@ const ProductDetails: React.FC = () => {
             <p>{product.description}</p>
             <p className={styles.price}>${product.price}</p>
             <p className={styles.discount}>{product.discountPercentage}% OFF</p>
-            <button className={styles.button}>Add to Cart</button>
+            <button className={styles.button} onClick={handleAddToCart}>
+              Add to Cart
+            </button>
             <div className={styles.additionalInfo}>
               <p>
                 <span>Brand:</span> {product.brand}
