@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "../features/productsSlice";
 import { addToCart } from "../features/cartSlice";
 import { RootState, AppDispatch } from "../app/store";
+import { toast } from "react-toastify";
 import styles from "../styles/ProductDetails.module.css";
 
 const ProductDetails: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
-    
+  const { id } = useParams<{ id: string }>();
+
   const dispatch = useDispatch<AppDispatch>();
   const product = useSelector(
     (state: RootState) => state.products.selectedProduct
@@ -22,8 +23,8 @@ const ProductDetails: React.FC = () => {
     }
   }, [id, dispatch]);
 
-    const handleAddToCart = () => {
-      console.log('cart')
+  const handleAddToCart = () => {
+    console.log("cart");
     if (product) {
       dispatch(
         addToCart({
@@ -33,8 +34,8 @@ const ProductDetails: React.FC = () => {
           quantity: 1,
         })
       );
+      toast.success("Added to cart!");
     }
-        alert("added to cart")
   };
 
   if (status === "loading") return <p>Loading...</p>;
