@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../features/productsSlice";
 import { RootState, AppDispatch } from "../app/store";
 import styles from "../styles/Products.module.css";
@@ -7,6 +8,7 @@ import { ShoppingCart } from "lucide-react";
 
 const Products: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { products, status, error } = useSelector(
     (state: RootState) => state.products
   );
@@ -28,7 +30,12 @@ const Products: React.FC = () => {
               <h3>{product.title}</h3>
               <p className={styles.price}>${product.price}</p>
               <div className={styles.actions}>
-                <button className={styles.button}>View Details</button>
+                <button
+                  className={styles.button}
+                  onClick={() => navigate(`/products/${product.id}`)}
+                >
+                  View Details
+                </button>
                 <ShoppingCart className={styles.icon} />
               </div>
             </div>
